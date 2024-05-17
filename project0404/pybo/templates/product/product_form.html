@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>상품 등록 화면</h1>
+
+  <form class="my-4" method="post">
+    {{form.csrf_token}}
+
+    {% include "form_errors.html" %}
+    <input type="hidden" name="user_id" value="{{g.user.id}}">
+    
+    <div class="container">
+       <div class="mb-3">
+        <label for="name" class="form-label">상품명</label>
+        <input class="form-control" id="name" name="name" value="{{form.name.data or ''}}" aria-describedby="emailHelp">
+      </div>
+
+      <div class="mb-3">
+        <label for="cost" class="form-label">가격</label>
+        <input type="number" class="form-control" id="cost" name="cost">
+      </div>
+
+      <div class="mb-3">
+        정보 <br>
+        <textarea for="info" name="info" id="info" class="form-label" cols="30" rows="10"></textarea>
+      </div>
+
+    </div>
+    <button type="submit" class="btn btn-primary">등록</button>
+  </form>
+
+{% endblock %}

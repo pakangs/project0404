@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h5>상품 정보 수정</h5>
+<form method="post">
+
+    {{form.csrf_token}}
+
+    {% include "form_errors.html" %}
+    <input type="hidden" name="user_id" value="{{g.user.id}}">
+    
+        이름: <input name="name"> <br>
+        가격: <input name="cost" type="number"> <br>
+        정보: <textarea name="info" cols="30" rows="10"></textarea>
+    <button>입력 완료</button>
+</form>
+{% endblock %}

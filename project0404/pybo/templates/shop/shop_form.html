@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>가게 등록 화면</h1>
+
+  <form class="my-4" method="post" enctype="multipart/form-data">
+    {{form.csrf_token}}
+
+    {% include "form_errors.html" %}
+
+    <input type="hidden" name="user_id" value="{{g.user.id}}">
+    
+    <div class="container">
+
+      <div class="mb-3">
+        <label for="name" class="form-label">가게명</label>
+        <input class="form-control" id="name" name="name" value="{{form.name.data or ''}}" aria-describedby="emailHelp">
+      </div>
+
+      <div class="mb-3">
+        <label for="owner" class="form-label">소유주</label>
+        <input class="form-control" id="owner" name="owner">
+      </div>
+
+      <div class="mb-3">
+        <label for="file" class="form-label">첨부파일</label>
+        <input type="file" class="form-control" id="file" name="file" value="{{form.file_path.data or ''}}">
+      </div>
+
+    </div>
+    <button type="submit" class="btn btn-primary">등록</button>
+  </form>
+
+{% endblock %}

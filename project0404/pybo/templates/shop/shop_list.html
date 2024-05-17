@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1><a href="{{url_for('shop.create')}}">가게 추가</a></h1>
+
+<hr>
+    <h1>가게 목록</h1>
+{% if shop_list %}
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">가게명</th>
+            <th scope="col">소유주</th>
+            <th scope="col">상품 갯수</th>
+            <th scope="col">작성자</th>
+            <th scope="col">비고</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for shop in shop_list %}
+            <tr>
+                <td>{{(shop_list.page-1) * shop_list.per_page + loop.index}}</td>
+                <td>{{shop.name}}</td>
+                <td>{{shop.owner}}</td>
+                {% if shop.product_set|length > 0 %}
+                    <td>{{shop.product_set|length}}</td>
+                {% else %}
+                    <td>상품 없음</td>
+                {% endif %}
+                <td>{{shop.user.username}}</td>
+                <td><a href="{{url_for('shop.detail', shop_id=shop.id)}}">자세히 보기</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% include 'paging_part.html' %}
+
+      {% include 'weather_part.html' %}
+
+      <p id="chart"></p>
+
+      <input type="hidden" name="city" value="/서울 강동구 천호제1동">
+
+{% else %}
+    <h1>데이터 없음!</h1>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready(function(){
+    getWeather()
+});
+ 
+</script>
+{% endblock %}

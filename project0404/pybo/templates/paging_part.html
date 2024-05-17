@@ -1,0 +1,31 @@
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      {% if shop_list.has_prev %}
+      <li class="page-item"><a class="page-link" href="{{url_for('shop.list', page=shop_list.prev_num)}}">이전</a></li>
+      {% else %}
+      {% endif %}
+
+      {% for page in shop_list.iter_pages() %}
+        {% if page %}
+          <li class="page-item {{'active' if page == shop_list.page else ''}}"><a class="page-link" href="{{url_for('shop.list', page=page)}}">{{page}}</a></li>
+        {% else %}
+          <li class="disabled page-item"><a class="page-link" href="javascript:void(0)">...</a></li>
+        {% endif %}
+      {% endfor %}
+
+      {% if shop_list.has_next %}
+      <li class="page-item"><a class="page-link" href="{{url_for('shop.list', page=shop_list.next_num)}}">다음</a></li>
+      {% else %}
+      <li class="page-item"><a class="page-link" href="javascript:void(0)">다음</a></li>
+      {% endif %}
+
+      <!-- <form action="{{url_for('shop.list')}}">
+        <li class="page-item">
+          <a class="page-link" href="javascript:void(0)">
+            <select name="" id=""></select>
+          </a>
+        </li>
+      </form> -->
+
+    </ul>
+  </nav>

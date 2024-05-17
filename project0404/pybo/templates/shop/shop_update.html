@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h4>가게 {{'수정' if g.is_update else '등록'}} 화면</h4>
+
+    <form method="post" enctype="multipart/form-data">
+        {{form.csrf_token}}
+
+        <input type="hidden" name="file_path" value="{{form.file_path.data or ''}}">
+        <input type="hidden" name="del_img" value=""1>
+
+        {% include "form_errors.html" %} 
+        <input type="hidden" name="user_id", value="{{g.user.id}}">
+
+        <div class="mb-3">
+            <label for="name" class="form-label">가게명</label>
+            <input class="form-control" id="name" name="name">
+        </div>
+
+        <div class="mb-3">
+            <label for="owner" class="form-label">소유주</label>
+            <input class="form-control" id="owner" name="owner">
+        </div>  
+
+        <div class="mb-3">
+            <label for="file" class="form-label">첨부파일</label>
+            <input type="file" class="form-control" id="file" name="file">
+        </div>
+
+        <button class="my-3 btn btn-primary">{{'수정' if g.is_update else '등록'}}</button>
+
+        <hr>
+
+        
+        <br>
+        첨부파일
+        <img width="20%" height="20%" src="{{form.file_path.data}}" alt="첨부된 파일">
+        <button id="btn_del_attach" type="button">첨부파일 삭제</button>
+        <br>
+        
+        
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function(){
+        $("#btn_del_attach").click(function(){
+            $("[name='del_img']").val(-1);
+            $("[alt='첨부된 파일']").remove();
+        });
+    });
+
+</script>
+{% endblock %}

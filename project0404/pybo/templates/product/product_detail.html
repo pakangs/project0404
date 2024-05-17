@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {{form.csrf_token}}
+
+    {% include "form_errors.html" %}
+    <input type="hidden" name="user_id" value="{{g.user.id}}">
+
+
+    <h1><a href="{{url_for('shop.detail', shop_id=shop_id)}}">가게로 돌아가기</a></h1>
+
+    이름: {{product.name}} <br>
+    가격: {{product.cost}} <br>
+    정보: {{product.info}} <br>
+    제조일: {{product.manufacturing_date}} <br>
+    유통기한: {{product.expiration_date}} <br>
+
+    <hr>
+
+    {% include 'weather_part.html' %}
+
+    {% if g.user == product.user %}
+    
+    <button><a href="{{url_for('product.update', shop_id=shop_id, product_id=product.id)}}">수정</a></button>
+
+    <button><a href="{{url_for('product.delete', shop_id=shop_id, product_id=product.id)}}">삭제</a></button>
+    {% endif %}
+{% endblock %}
+
+
+{% block script %}
+<script>
+  $(document).ready(function(){
+    getWeather()
+  });
+</script>
+{% endblock %}

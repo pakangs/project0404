@@ -1,0 +1,68 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if shop %}
+
+<div class="card container" style="width: 18rem;">
+    첨부파일
+    <img src="{{shop.file_path}}" class="card-img-top">
+    <div class="card-body">
+      <h5 class="card-title">{{shop.name}}</h5>
+      <h5 class="card-title">{{shop.owner}}</h5>
+      <h5 class="card-title">{{shop.user.username}}</h5>
+      <p class="card-text">{{shop.create_date|datetime}} / {{shop.update_date|datetime}}</p>
+      
+      <a href="{{url_for('shop.update', shop_id=shop.id)}}" class="btn btn-primary">수정</a>
+
+      <a href="{{url_for('shop.delete', shop_id=shop.id)}}" class="btn btn-primary delete">삭제</a> <br>
+      <br>
+      <a href="{{url_for('shop.list')}}" class="btn btn-primary">목록으로 돌아가기</a> <br>
+    </div>
+</div>
+<hr>
+
+<div class="container">
+  <h1>상품 목록</h1>
+
+  <h2><a href="{{url_for('product.insert', shop_id=shop.id)}}">상품 추가하기</a></h2>
+
+  <hr>
+
+  <ul class="list-group">
+      {% for product in shop.product_set %}
+          <li class="list-group-item">
+              <p>이름: {{product.name}}</p>
+              <p>가격: {{product.cost}}</p>
+              <p>작성자: {{product.user.username}}</p>
+              <a class="btn btn-primary my-3" href="{{url_for('product.detail', shop_id=shop.id, product_id=product.id)}}">자세히 보기</a>
+          </li>
+      {% endfor %}
+  </ul>
+
+  
+</div>
+
+{% else %}
+<p>데이터가 없습니다!</p>
+
+{% endif %}
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready(function(){
+    $(".delete").click(function(event){
+      event.preventDefault();
+      let areyousure = confirm("정말로 삭제하시겠습니까?");
+
+      if(areyousure){
+        location.href = $(this).attr("href");
+        // location.assign($(this).attr("href"))
+      }
+    })
+  });
+</script>
+{% endblock %}
